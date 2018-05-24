@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // Event types corresponding to scm hooks.
@@ -107,6 +108,9 @@ func (m *Metadata) Environ() map[string]string {
 		"CI_BUILD_CREATED":             strconv.FormatInt(m.Curr.Created, 10),
 		"CI_BUILD_STARTED":             strconv.FormatInt(m.Curr.Started, 10),
 		"CI_BUILD_FINISHED":            strconv.FormatInt(m.Curr.Finished, 10),
+		"CI_BUILD_CREATED_DATE":        time.Unix(m.Curr.Created, 0).Format("20060102-150405"),
+		"CI_BUILD_STARTED_DATE":        time.Unix(m.Curr.Started, 0).Format("20060102-150405"),
+		"CI_BUILD_FINISHED_DATE":       time.Unix(m.Curr.Finished, 0).Format("20060102-150405"),
 		"CI_BUILD_STATUS":              m.Curr.Status,
 		"CI_BUILD_EVENT":               m.Curr.Event,
 		"CI_BUILD_LINK":                m.Curr.Link,
@@ -202,6 +206,9 @@ func (m *Metadata) EnvironDrone() map[string]string {
 		"DRONE_BUILD_CREATED":        fmt.Sprintf("%d", m.Curr.Created),
 		"DRONE_BUILD_STARTED":        fmt.Sprintf("%d", m.Curr.Started),
 		"DRONE_BUILD_FINISHED":       fmt.Sprintf("%d", m.Curr.Finished),
+		"DRONE_BUILD_CREATED_DATE":   time.Unix(m.Curr.Created, 0).Format("20060102-150405"),
+		"DRONE_BUILD_STARTED_DATE":   time.Unix(m.Curr.Started, 0).Format("20060102-150405"),
+		"DRONE_BUILD_FINISHED_DATE":  time.Unix(m.Curr.Finished, 0).Format("20060102-150405"),
 		"DRONE_JOB_NUMBER":           fmt.Sprintf("%d", m.Job.Number),
 		"DRONE_JOB_STARTED":          fmt.Sprintf("%d", m.Curr.Started), // ISSUE: no job started
 		"DRONE_BRANCH":               m.Curr.Commit.Branch,
